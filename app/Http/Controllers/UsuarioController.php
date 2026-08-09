@@ -10,25 +10,37 @@ class UsuarioController extends Controller
 {
     public function index(){
         $usuarios = Usuario::all();
-         return view('usuarios', ['usuarios' => $usuarios]);
+        return view('usuarios', ['usuarios' => $usuarios]);
     }
 
     public function store(Request $request){
+        $request->validate([
+            'nome' => 'required',
+            'email' => 'required|email|unique:usuario,email',
+            'senha' => 'required|min:6',
+        ]);
+
         Usuario::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
         ]);
 
-        return redirect()->route('usuarios');
+        return redirect()->route('usuarios')->with('sucesso', 'Usuário cadastrado com sucesso!');
     }
-    
+
     public function edit($id){
-    $usuario = Usuario::find($id);
-    return view('usuarios_edit', ['usuario' => $usuario]);
-}
+        $usuario = Usuario::find($id);
+        return view('usuarios_edit', ['usuario' => $usuario]);
+    }
 
     public function update(Request $request, $id){
+        $request->validate([
+            'nome' => 'required',
+            'email' => 'required|email',
+            'senha' => 'nullable|min:6',
+        ]);
+
         $usuario = Usuario::find($id);
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
@@ -37,12 +49,11 @@ class UsuarioController extends Controller
         }
         $usuario->save();
 
-    return redirect()->route('usuarios');
-}
-    public function destroy($id){
-        Usuario::find($id)->delete();
-        return redirect()->route('usuarios');
+        return redirect()->route('usuarios')->with('sucesso', 'Usuário atualizado com sucesso!');
     }
 
-
+    public function destroy($id){
+        Usuario::find($id)->delete();
+        return redirect()->route('usuarios')->with('sucesso', 'Usuário excluído com sucesso!');
+    }
 }

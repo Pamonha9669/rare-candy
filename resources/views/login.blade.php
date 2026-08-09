@@ -34,6 +34,15 @@
 		
 								</div>
 			      	</div>
+
+							@if ($errors->any())
+								<div class="alert alert-danger text-center">
+									@foreach ($errors->all() as $error)
+										<p class="mb-0">{{ $error }}</p>
+									@endforeach
+								</div>
+							@endif
+
 							 <form method="POST" action="{{ route('login') }}"class="signin-form">
     @csrf
 
@@ -45,6 +54,7 @@
             type="email" 
             class="form-control" 
             placeholder="E-mail" 
+            value="{{ old('email') }}"
             required>
     </div>
 
