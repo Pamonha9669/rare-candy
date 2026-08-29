@@ -24,7 +24,7 @@
 		<div class="row text-center">
 			<div class="col-lg-6 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0">
 				<div class="single_service">
-					<img src="{{ asset('imagens/Produtos.png') }}" alt="icon" />
+					<img src="{{ asset('Imagens/Produtos.png') }}" alt="icon" />
 					<h4>Gerenciar Produtos</h4>
 					<p>Alterar, adicionar ou remover informações dos produtos.</p>
 					<a class="btn_one" href="{{ route('produtos') }}">Mais Informações</a>
@@ -32,7 +32,7 @@
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0">
 				<div class="single_service">
-					<img src="{{ asset('imagens/Usuarios.png') }}" alt="icon" />
+					<img src="{{ asset('Imagens/Usuarios.png') }}" alt="icon" />
 					<h4>Gerenciar Usuários</h4>
 					<p>Alterar, adicionar ou remover informações dos usuários.</p>
 					<a class="btn_one" href="{{ route('usuarios') }}">Mais Informações</a>
