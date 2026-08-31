@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-    public function index(){
-        $usuarios = Usuario::all();
+    public function index(Request $request){
+        $usuarios = Usuario::when($request->filled('termo'), function ($query) use ($request) {
+            $query->where('nome', 'like', '%' . $request->termo . '%');})->get();
         return view('usuarios', ['usuarios' => $usuarios]);
     }
 

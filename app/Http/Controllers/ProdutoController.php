@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
-    public function index(){
-        $produtos = Produto::all();
+    public function index(Request $request){
+        $produtos = Produto::when($request->filled('termo'), function ($query) use ($request) {
+            $query->where('nome', 'like', '%' . $request->termo . '%');})->get();
         return view('produtos', ['produtos' => $produtos]);
     }
 

@@ -18,6 +18,8 @@
 </section>
 <!-- END SECTION TOP -->
 
+@include('layouts.pesquisa')
+
 @if(session('sucesso'))
     <div class="container mt-4">
         <div class="alert alert-success text-center">{{ session('sucesso') }}</div>
