@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-   
     public function up(): void
     {
-        Schema::create('Favoritos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('produto_id')->nullable()->index();
+        Schema::table('Produtos', function (Blueprint $table) {
+            $table->string('imagem')->nullable();
         });
     }
 
     public function down(): void
     {
-      Schema::dropIfExists('Favoritos');
+        Schema::table('Produtos', function (Blueprint $table) {
+            $table->dropColumn('imagem');
+        });
     }
 };
