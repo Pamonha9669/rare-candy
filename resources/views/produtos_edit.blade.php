@@ -24,7 +24,8 @@
                     <div class="about_project">
                         <h4>Editar Produto</h4>
 
-                        <form action="{{ route('produtos.update', $produto->id) }}" method="POST">
+                        {{-- MUDANÇA 1: enctype adicionado --}}
+                        <form action="{{ route('produtos.update', $produto->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -40,6 +41,22 @@
                                 <input type="number" step="0.01" name="preco" class="form-control"
                                        value="{{ $produto->preco }}" placeholder="Preço" required>
                             </div>
+
+                            {{-- MUDANÇA 2: mostra a foto atual do produto --}}
+                            @if($produto->imagem)
+                                <div class="mb-3">
+                                    <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}"
+                                         style="max-width:200px; border-radius:10px;">
+                                </div>
+                            @endif
+
+                           <div class="mb-3">
+                                <input type="file" name="imagem" id="imagem" accept="image/*" style="display:none;"
+                                     onchange="document.getElementById('nome-arquivo').textContent = this.files[0] ? this.files[0].name : 'Nenhuma imagem selecionada';">
+                                <label for="imagem" class="btn_one" style="cursor:pointer; display:inline-block; margin:0;">Escolher nova imagem</label>
+                                <span id="nome-arquivo" style="margin-left:10px;">Nenhuma imagem selecionada</span>
+                                <br> <br> <small>Deixe vazio para manter a foto atual.</small>
+                           </div>
 
                             <button type="submit" class="btn_one">Salvar Alterações</button>
                             <a href="{{ route('produtos') }}" class="btn_one">Cancelar</a>

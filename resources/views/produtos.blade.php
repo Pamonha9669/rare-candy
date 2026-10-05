@@ -41,7 +41,8 @@
                 <div class="project_details text-center">
                     <div class="about_project">
                         <h4>Cadastrar Novo Produto</h4>
-                        <form action="{{ route('produtos.store') }}" method="POST">
+
+                        <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <input type="text" name="nome" class="form-control" placeholder="Nome do produto" required>
@@ -52,6 +53,14 @@
                             <div class="mb-3">
                                 <input type="number" step="0.01" name="preco" class="form-control" placeholder="Preço" required>
                             </div>
+
+                            <div class="mb-3">
+                                <input type="file" name="imagem" id="imagem" accept="image/*" style="display:none;"
+                                  onchange="document.getElementById('nome-arquivo').textContent = this.files[0] ? this.files[0].name : 'Nenhuma imagem selecionada';">
+                                <label for="imagem" class="btn_one" style="cursor:pointer; display:inline-block; margin:0;">Escolher imagem</label>
+                                <span id="nome-arquivo" style="margin-left:10px;">Nenhuma imagem selecionada</span>
+                            </div>
+
                             <button type="submit" class="btn_one">Cadastrar</button>
                         </form>
                     </div>
@@ -69,6 +78,12 @@
                     <div class="project_details text-center">
                         <div class="about_project">
                             <h4>{{ $produto->nome }}</h4>
+
+                            @if($produto->imagem)
+                                <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}"
+                                     style="max-width:200px; border-radius:10px; margin-bottom:15px;">
+                            @endif
+
                             <p>
                                 <b>Descrição:</b> {{ $produto->descricao }} <br>
                                 <b>Preço:</b> R$ {{ number_format($produto->preco, 2, ',', '.') }}
