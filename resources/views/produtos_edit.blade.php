@@ -42,13 +42,12 @@
                                        value="{{ $produto->preco }}" placeholder="Preço" required>
                             </div>
 
-                            {{-- MUDANÇA 2: mostra a foto atual do produto --}}
-                            @if($produto->imagem)
-                                <div class="mb-3">
-                                    {{ asset('fotos/' . basename($produto->imagem)) }}
-                                         style="max-width:200px; border-radius:10px;">
-                                </div>
-                            @endif
+                           @if($produto->imagem)
+                              <div class="mb-3">
+                              <img src="{{ asset('fotos/' . basename($produto->imagem)) }}" alt="{{ $produto->nome }}"
+                              style="max-width:200px; border-radius:10px;">
+                              </div>
+                           @endif
 
                            <div class="mb-3">
                                 <input type="file" name="imagem" id="imagem" accept="image/*" style="display:none;"
