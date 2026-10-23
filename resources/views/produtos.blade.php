@@ -80,7 +80,7 @@
                             <h4>{{ $produto->nome }}</h4>
 
                             @if($produto->imagem)
-                                {{ asset($produto->imagem) }}
+                                {{ asset('fotos/' . basename($produto->imagem)) }}
                                      style="max-width:200px; border-radius:10px; margin-bottom:15px;">
                             @endif
 

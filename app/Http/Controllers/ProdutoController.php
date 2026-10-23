@@ -27,8 +27,8 @@ class ProdutoController extends Controller
         if ($request->hasFile('imagem')) {
             $arquivo = $request->file('imagem');
             $nome = uniqid() . '.' . $arquivo->getClientOriginalExtension();
-            $arquivo->move(public_path('produtos'), $nome);
-            $dados['imagem'] = 'produtos/' . $nome; 
+            $arquivo->move(public_path('fotos'), $nome);
+            $dados['imagem'] = 'fotos/' . $nome;
         }
 
         Produto::create($dados);
@@ -57,8 +57,8 @@ class ProdutoController extends Controller
         if ($request->hasFile('imagem')) {
             $arquivo = $request->file('imagem');
             $nome = uniqid() . '.' . $arquivo->getClientOriginalExtension();
-            $arquivo->move(public_path('produtos'), $nome);
-            $produto->imagem = 'produtos/' . $nome;
+            $arquivo->move(public_path('fotos'), $nome);
+            $produto->imagem = 'fotos/' . $nome;
         }
 
         $produto->save();

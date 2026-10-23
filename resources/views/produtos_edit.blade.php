@@ -45,7 +45,7 @@
                             {{-- MUDANÇA 2: mostra a foto atual do produto --}}
                             @if($produto->imagem)
                                 <div class="mb-3">
-                                    {{ asset($produto->imagem) }}
+                                    {{ asset('fotos/' . basename($produto->imagem)) }}
                                          style="max-width:200px; border-radius:10px;">
                                 </div>
                             @endif
