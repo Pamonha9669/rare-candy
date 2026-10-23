@@ -25,7 +25,10 @@ class ProdutoController extends Controller
         $dados = $request->only('nome', 'descricao', 'preco');
 
         if ($request->hasFile('imagem')) {
-            $dados['imagem'] = $request->file('imagem')->store('produtos', 'public');
+            $arquivo = $request->file('imagem');
+            $nome = uniqid() . '.' . $arquivo->getClientOriginalExtension();
+            $arquivo->move(public_path('produtos'), $nome);
+            $dados['imagem'] = 'produtos/' . $nome; 
         }
 
         Produto::create($dados);
@@ -52,7 +55,10 @@ class ProdutoController extends Controller
         $produto->preco = $request->preco;
 
         if ($request->hasFile('imagem')) {
-            $produto->imagem = $request->file('imagem')->store('produtos', 'public');
+            $arquivo = $request->file('imagem');
+            $nome = uniqid() . '.' . $arquivo->getClientOriginalExtension();
+            $arquivo->move(public_path('produtos'), $nome);
+            $produto->imagem = 'produtos/' . $nome;
         }
 
         $produto->save();

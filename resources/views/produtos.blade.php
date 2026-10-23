@@ -80,7 +80,7 @@
                             <h4>{{ $produto->nome }}</h4>
 
                             @if($produto->imagem)
-                                <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}"
+                                {{ asset($produto->imagem) }}
                                      style="max-width:200px; border-radius:10px; margin-bottom:15px;">
                             @endif
 
