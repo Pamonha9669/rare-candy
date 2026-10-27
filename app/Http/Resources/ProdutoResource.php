@@ -14,7 +14,7 @@ class ProdutoResource extends JsonResource
             'nome'      => $this->nome,
             'descricao' => $this->descricao,
             'preco'     => (float) $this->preco,
-            'imagem' => $this->imagem ? asset('fotos/' . basename($this->imagem)) : null,
+            'imagem' => $this->imagem,
         ];
     }
 }

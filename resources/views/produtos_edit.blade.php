@@ -44,8 +44,8 @@
 
                            @if($produto->imagem)
                               <div class="mb-3">
-                              <img src="{{ asset('fotos/' . basename($produto->imagem)) }}" alt="{{ $produto->nome }}"
-                              style="max-width:200px; border-radius:10px;">
+                              <img src="{{ $produto->imagem }}" alt="{{ $produto->nome }}"
+                                    style="max-width:200px; border-radius:10px;">
                               </div>
                            @endif
 

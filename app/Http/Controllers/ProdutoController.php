@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Http\Resources\ProdutoResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ProdutoController extends Controller
 {
@@ -25,11 +26,12 @@ class ProdutoController extends Controller
         $dados = $request->only('nome', 'descricao', 'preco');
 
         if ($request->hasFile('imagem')) {
-            $arquivo = $request->file('imagem');
-            $nome = uniqid() . '.' . $arquivo->getClientOriginalExtension();
-            $arquivo->move(public_path('fotos'), $nome);
-            $dados['imagem'] = 'fotos/' . $nome;
-        }
+    $url = $this->enviarImagem($request->file('imagem'));
+    if (!$url) {
+        return back()->withInput()->withErrors(['imagem' => 'Não foi possível enviar a imagem.']);
+    }
+    $dados['imagem'] = $url;
+    }
 
         Produto::create($dados);
 
@@ -55,11 +57,12 @@ class ProdutoController extends Controller
         $produto->preco = $request->preco;
 
         if ($request->hasFile('imagem')) {
-            $arquivo = $request->file('imagem');
-            $nome = uniqid() . '.' . $arquivo->getClientOriginalExtension();
-            $arquivo->move(public_path('fotos'), $nome);
-            $produto->imagem = 'fotos/' . $nome;
-        }
+    $url = $this->enviarImagem($request->file('imagem'));
+    if (!$url) {
+        return back()->withInput()->withErrors(['imagem' => 'Não foi possível enviar a imagem.']);
+    }
+    $produto->imagem = $url;
+    }
 
         $produto->save();
 
@@ -71,7 +74,15 @@ class ProdutoController extends Controller
         return redirect()->route('produtos')->with('sucesso', 'Produto excluído com sucesso!');
     }
 
-    // ===== API para o app Flutter =====
+    private function enviarImagem($arquivo){
+    $resposta = Http::attach('file', file_get_contents($arquivo->getRealPath()), $arquivo->getClientOriginalName())
+        ->post('https://api.cloudinary.com/v1_1/' . config('services.cloudinary.cloud_name') . '/image/upload', [
+            'upload_preset' => config('services.cloudinary.upload_preset'),
+        ]);
+
+    return $resposta->successful() ? $resposta->json('secure_url') : null;
+    }
+
     public function apiIndex(Request $request){
         $produtos = Produto::when($request->filled('termo'), function ($query) use ($request) {
             $query->where('nome', 'like', '%' . $request->termo . '%');
