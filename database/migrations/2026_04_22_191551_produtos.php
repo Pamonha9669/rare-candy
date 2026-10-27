@@ -9,18 +9,18 @@ return new class extends Migration
     
     public function up(): void
     {
-         Schema::create('Produtos', function (Blueprint $table) {
+         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->text('descricao');
             $table->float('preco');
-           
+            $table->string('imagem')->nullable();
         });
     }
 
     
     public function down(): void
     {
-        Schema::dropIfExists('Produtos');
+        Schema::dropIfExists('produtos');
     }
 };
